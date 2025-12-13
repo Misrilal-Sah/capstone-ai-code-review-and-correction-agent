@@ -1,4 +1,8 @@
-# RAG Chatbot Dependencies
+# ===========================================
+# AI Code Review Agent - Requirements
+# ===========================================
+
+# ----- Core Dependencies -----
 
 # PDF Processing
 PyMuPDF>=1.23.0
@@ -17,7 +21,7 @@ sentence-transformers>=2.2.0
 # Vector Database
 chromadb>=0.4.0
 
-# LLM (Free HuggingFace)
+# LLM (Free HuggingFace - Local Fallback)
 transformers>=4.36.0
 accelerate>=0.25.0
 
@@ -26,3 +30,33 @@ torch>=2.0.0
 
 # Utilities
 tqdm>=4.65.0
+
+# ----- LLM API Providers -----
+
+# Google Gemini (Priority 1)
+google-generativeai>=0.8.0
+
+# Groq (Priority 2)
+groq>=0.4.0
+
+# OpenAI / OpenRouter (Priority 3-4)
+openai>=1.0.0
+
+# Environment Variables
+python-dotenv>=1.0.0
+
+# ----- Code Analysis Tools -----
+
+# Syntax Highlighting
+pygments>=2.17.0
+
+# Code Formatting
+black>=24.0.0
+
+# Linting
+pylint>=3.0.0
+
+# ----- Git & GitHub Integration -----
+
+# GitHub API
+PyGithub>=2.8.0

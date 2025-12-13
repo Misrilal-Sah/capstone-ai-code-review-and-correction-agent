@@ -67,13 +67,24 @@ class VectorStore:
         if metadatas is None:
             metadatas = [{}] * len(texts)
         
-        # Add to collection
-        self.collection.add(
-            documents=texts,
-            embeddings=embeddings,
-            metadatas=metadatas,
-            ids=ids
-        )
+        # Batch processing for large datasets (ChromaDB max batch is ~5000)
+        BATCH_SIZE = 5000
+        total = len(texts)
+        
+        for start in range(0, total, BATCH_SIZE):
+            end = min(start + BATCH_SIZE, total)
+            batch_texts = texts[start:end]
+            batch_embeddings = embeddings[start:end]
+            batch_metadatas = metadatas[start:end]
+            batch_ids = ids[start:end]
+            
+            self.collection.add(
+                documents=batch_texts,
+                embeddings=batch_embeddings,
+                metadatas=batch_metadatas,
+                ids=batch_ids
+            )
+            print(f"  Added batch {start//BATCH_SIZE + 1}: {len(batch_texts)} documents")
         
         print(f"✓ Added {len(texts)} documents to vector store")
         print(f"  Total documents: {self.collection.count()}")

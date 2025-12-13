@@ -1,31 +1,59 @@
-# Byte-compiled / optimized / DLL files
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 
-# Virtual environments
+# Virtual Environment
 venv/
+ENV/
 env/
-.venv/
-
-# ChromaDB persistence
-chroma_db/
-
-# Cached transcripts
-transcripts/
-
-# Data files (large videos/audio - too big for GitHub)
-Data/
 
 # IDE
-.vscode/
 .idea/
+.vscode/
+*.swp
+*.swo
+
+# Environment Variables (SECRETS - DO NOT COMMIT)
+.env
+.env.local
+.env.*.local
+
+# Generated Output (can be regenerated)
+code_review_output/
+chroma_db/
+
+# Large Media Files (download separately)
+*.mp4
+*.mp3
+*.wav
+*.avi
+*.mkv
+
+# Jupyter
+.ipynb_checkpoints/
 
 # OS
 .DS_Store
 Thumbs.db
 
-# Large media files (optional - remove if you want to include them)
-# *.mp4
-# *.mp3
-# *.wav
+# Logs
+*.log
+answer_log.txt
