@@ -174,7 +174,7 @@ python code_review_main.py index --data-dir ./Data/python
 python code_review_main.py review ./samples/python/bad_code_smells.py
 
 # Review entire folder
-python code_review_main.py review ./src/ --output-dir ./reviews
+python code_review_main.py review ./samples/python
 
 # Review uncommitted changes (modified tracked files)
 python code_review_main.py review-changes
