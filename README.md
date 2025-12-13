@@ -4,13 +4,15 @@ An intelligent, autonomous AI agent that performs comprehensive code reviews usi
 
 ## 🎯 Project Overview
 
-This project implements a **AI Agentic System** for code review that:
+This project implements an **AI Agentic System** for **Python code review** that:
 
 - **Analyzes Python code** for bugs, security issues, code smells, and best practice violations
 - **Uses RAG** to retrieve relevant knowledge from PDFs and video transcripts
 - **Generates corrected code** with proper fixes
 - **Self-reflects** on its own outputs to improve quality
 - **Validates fixes** in a sandbox before presenting them
+
+> **⚠️ Python Only:** This agent currently supports **Python files only** (`.py`). When using `review-commit`, `review-changes`, or `review-pr`, non-Python files are automatically skipped.
 
 ---
 
