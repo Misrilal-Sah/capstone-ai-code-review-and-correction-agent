@@ -309,5 +309,4 @@ Review complete! Confidence: 90.0%
 ## 🙏 Acknowledgments
 
 - AI Academy for the assignment
-- Anthropic, Google, Groq for LLM APIs
 - HuggingFace for open-source models
