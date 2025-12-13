@@ -226,8 +226,13 @@ python code_review_main.py review-pr 42 --repo owner/repo
 ├── code_review_main.py          # CLI entry point
 ├── requirements.txt             # Dependencies
 ├── architecture.mmd             # Mermaid architecture diagram
-└── README.md                    # This file
+├── README.md                    # This file
+│
+├── test_chatbot.py              # (HW4) RAG chatbot test script
+└── answer_log.txt               # (HW4) Test output log
 ```
+
+> **Note:** `test_chatbot.py` and `answer_log.txt` are from a previous homework (HW4) for RAG Chatbot development. They use the `Data/` folder for knowledge base documents.
 
 ---
 
