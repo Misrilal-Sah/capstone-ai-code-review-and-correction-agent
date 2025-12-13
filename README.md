@@ -176,8 +176,11 @@ python code_review_main.py review ./samples/python/bad_code_smells.py
 # Review entire folder
 python code_review_main.py review ./src/ --output-dir ./reviews
 
-# Review uncommitted changes
+# Review uncommitted changes (modified tracked files)
 python code_review_main.py review-changes
+
+# Review staged changes (new or modified files - use git add first)
+python code_review_main.py review-changes --staged
 
 # Review a specific commit
 python code_review_main.py review-commit abc123
@@ -185,6 +188,8 @@ python code_review_main.py review-commit abc123
 # Review a GitHub PR
 python code_review_main.py review-pr 42 --repo owner/repo
 ```
+
+> **💡 Tip:** For new (untracked) files, use `git add <file>` first, then run `review-changes --staged`.
 
 ---
 
