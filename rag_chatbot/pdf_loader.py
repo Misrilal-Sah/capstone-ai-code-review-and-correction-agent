@@ -72,7 +72,8 @@ def load_all_pdfs_from_directory(directory: str) -> Dict[str, str]:
     if not dir_path.exists():
         raise NotADirectoryError(f"Directory not found: {directory}")
     
-    pdf_files = list(dir_path.glob("*.pdf"))
+    # Use rglob for recursive search in subdirectories
+    pdf_files = list(dir_path.rglob("*.pdf"))
     
     if not pdf_files:
         print(f"No PDF files found in {directory}")
