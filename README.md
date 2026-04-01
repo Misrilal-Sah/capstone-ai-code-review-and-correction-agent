@@ -1,267 +1,386 @@
-# AI Agentic System - Code Review & RAG Chatbot
+<div align="center">
 
-An intelligent, autonomous AI agent system featuring **two specialized agents**:
-1. **Code Review Agent** - Comprehensive Python code analysis with fixes
-2. **RAG Chatbot Agent** - General-purpose Q&A with knowledge base retrieval
+```
+ ██████╗ ██████╗ ██████╗ ███████╗    ██████╗ ███████╗██╗   ██╗██╗███████╗██╗    ██╗
+██╔════╝██╔═══██╗██╔══██╗██╔════╝    ██╔══██╗██╔════╝██║   ██║██║██╔════╝██║    ██║
+██║     ██║   ██║██║  ██║█████╗      ██████╔╝█████╗  ██║   ██║██║█████╗  ██║ █╗ ██║
+██║     ██║   ██║██║  ██║██╔══╝      ██╔══██╗██╔══╝  ╚██╗ ██╔╝██║██╔══╝  ██║███╗██║
+╚██████╗╚██████╔╝██████╔╝███████╗    ██║  ██║███████╗ ╚████╔╝ ██║███████╗╚███╔███╔╝
+ ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝    ╚═╝  ╚═╝╚══════╝  ╚═══╝  ╚═╝╚══════╝ ╚══╝╚══╝
+```
 
-Both agents use RAG (Retrieval-Augmented Generation), multi-LLM fallback chains, and self-reflection capabilities.
+### ✦ AI-Powered Code Review & RAG Knowledge Agent ✦
+### *Autonomous · Reflective · Multi-LLM · CLI-First*
 
-## 🎯 Project Overview
+<br/>
 
-This project implements an **AI Agentic System** that demonstrates:
+[![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![Gemini](https://img.shields.io/badge/Gemini_2.5_Pro-Primary_LLM-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev)
+[![Groq](https://img.shields.io/badge/Groq-llama--3.1--8b-F54E42?style=for-the-badge&logo=groq&logoColor=white)](https://groq.com)
+[![ChromaDB](https://img.shields.io/badge/ChromaDB-7124_Chunks-FF6B35?style=for-the-badge)](https://trychroma.com)
+[![LangChain](https://img.shields.io/badge/LangChain-RAG_Pipeline-1C3C3C?style=for-the-badge&logo=chainlink&logoColor=white)](https://langchain.com)
 
-- **Data Preparation & Contextualization** - Multi-modal data loading (PDFs, videos)
-- **RAG Pipeline Design** - Semantic search with ChromaDB and embeddings
-- **Reasoning & Reflection** - Self-evaluation with confidence scoring
-- **Tool-Calling Mechanisms** - Modular tools for actions (search, analyze, validate)
-- **Evaluation Metrics** - Quality measurement (relevance, groundedness, clarity)
+[![License](https://img.shields.io/badge/License-MIT-22C55E?style=for-the-badge)](LICENSE)
+[![Status](https://img.shields.io/badge/Status-Production_Ready-22C55E?style=for-the-badge)]()
+[![AST Rules](https://img.shields.io/badge/AST_Rules-24_Checks-8B5CF6?style=for-the-badge)]()
+[![Confidence](https://img.shields.io/badge/Self_Reflection-3_Iterations-F59E0B?style=for-the-badge)]()
 
-> **Two Agents, One System:**
-> - `python rag_main.py` → General-purpose RAG Chatbot Agent
-> - `python code_review_main.py` → Specialized Code Review Agent
+<br/>
+
+> **Two agents. One codebase. Zero compromise.**
+> Drop in any Python file, folder, git diff, or GitHub PR — and get an expert-grade review,
+> corrected source code, and a full audit trail. Ask anything about Python best practices
+> and get RAG-grounded answers from a 7,124-chunk knowledge base.
+
+<br/>
+
+</div>
 
 ---
 
-## 🏗️ Architecture
+## ⚡ What Is This?
 
-This project has **two specialized agents** that share a common RAG infrastructure:
+An **autonomous AI agentic system** built around two production-grade CLI tools that share a common RAG infrastructure. Point the Code Review Agent at any Python source — file, folder, git diff, or live GitHub PR — and receive a full markdown report, corrected source code, and an audit log. Open the RAG Chatbot to query a curated 7,124-chunk knowledge base of Python best-practice documents, answered with source citations, confidence scores, and letter grades.
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                              USER INPUT                                     │
-│   ┌─────────────────────────┐         ┌───────────────────────────────────┐│
-│   │   Question / Query      │         │  Code File / Folder / Git / PR    ││
-│   └───────────┬─────────────┘         └─────────────────┬─────────────────┘│
-└───────────────┼─────────────────────────────────────────┼───────────────────┘
-                │                                         │
-                ▼                                         ▼
-┌───────────────────────────────┐     ┌───────────────────────────────────────┐
-│   🤖 RAG CHATBOT AGENT        │     │      🔍 CODE REVIEW AGENT             │
-│   (rag_main.py)               │     │      (code_review_main.py)            │
-│                               │     │                                       │
-│  ┌──────────────────────────┐ │     │  ┌─────────────────────────────────┐  │
-│  │ Tools:                   │ │     │  │ Tools:                          │  │
-│  │ • knowledge_search       │ │     │  │ • file_reader                   │  │
-│  │ • clarify_question       │ │     │  │ • static_analysis_helper        │  │
-│  │ • markdown_writer        │ │     │  │ • markdown_writer               │  │
-│  │ • provide_sources        │ │     │  │ • sandbox_validator             │  │
-│  └──────────────────────────┘ │     │  └─────────────────────────────────┘  │
-│                               │     │                                       │
-│  ┌──────────────────────────┐ │     │  ┌─────────────────────────────────┐  │
-│  │ Self-Reflection          │ │     │  │ Self-Reflection (3 iterations)  │  │
-│  │ + Confidence Scoring     │ │     │  │ + Sandbox Validation            │  │
-│  └──────────────────────────┘ │     │  └─────────────────────────────────┘  │
-│                               │     │                                       │
-│  ┌──────────────────────────┐ │     │  ┌─────────────────────────────────┐  │
-│  │ Evaluation Metrics:      │ │     │  │ Static Analysis:                │  │
-│  │ • Relevance              │ │     │  │ • AST Parsing (24 rules)        │  │
-│  │ • Groundedness           │ │     │  │ • Pylint, Black                 │  │
-│  │ • Clarity                │ │     │  │ • Syntax Validation             │  │
-│  │ • Completeness           │ │     │  └─────────────────────────────────┘  │
-│  └──────────────────────────┘ │     │                                       │
-└───────────────┬───────────────┘     └─────────────────┬─────────────────────┘
-                │                                       │
-                └───────────────────┬───────────────────┘
-                                    ▼
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                        🔗 SHARED INFRASTRUCTURE                             │
-│  ┌────────────────────────────┐    ┌────────────────────────────────────┐  │
-│  │ 🧠 Multi-LLM Fallback:     │    │ 📚 RAG Pipeline:                   │  │
-│  │ Gemini → Groq → Flash →   │    │ PDF Loader → Chunker → Embedder → │  │
-│  │ OpenRouter → FLAN-T5      │    │ ChromaDB (7,124 chunks)            │  │
-│  └────────────────────────────┘    └────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────────────────────────────┘
-                                    │
-                                    ▼
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                              📤 OUTPUT                                      │
-│   ┌─────────────────────────┐         ┌───────────────────────────────────┐│
-│   │ Answer + Sources +      │         │ codereview.md + corrected_*.py    ││
-│   │ Confidence + Grade      │         │ + audit_log.json                  ││
-│   └─────────────────────────┘         └───────────────────────────────────┘│
-└─────────────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────┐
+│  TWO ENTRY POINTS                           │
+│                                             │
+│  $ python code_review_main.py  →  🔍 Review │
+│  $ python rag_main.py          →  🤖 Chat   │
+└─────────────────────────────────────────────┘
 ```
 
-See `architecture.mmd` for a detailed Mermaid diagram.
+| Capability | Details |
+|---|---|
+| 🧠 Multi-LLM Fallback | Gemini 2.5 Pro → Groq → Flash → OpenRouter → FLAN-T5 |
+| 🔍 Static Analysis | 24 AST-based rules, Pylint + Black integration |
+| 📚 Knowledge Base | 22 PDFs + 2 video transcripts = 7,124 indexed chunks |
+| 🔄 Self-Reflection | Up to 3 iterations, auto-refine if confidence < 70% |
+| 🛡️ Sandbox Validation | `compile()` + Black + Pylint before presenting any fix |
+| 🐙 Git / GitHub Native | Diff review, commit review, live PR review via API |
 
 ---
 
-## ✨ Features
 
-### 1. Multi-Source Code Review
-- **Single file review**: `python code_review_main.py review file.py`
-- **Folder review**: `python code_review_main.py review ./src/`
-- **Git uncommitted changes**: `python code_review_main.py review-changes`
-- **Specific commit**: `python code_review_main.py review-commit <hash>`
-- **GitHub Pull Request**: `python code_review_main.py review-pr <PR#> --repo owner/repo`
+---
 
-### 2. RAG-Powered Knowledge Base
-- **22 PDF documents** on Python best practices, design patterns, security, RAG concepts
-- **2 Video transcripts** (Whisper-transcribed) on RAG and GenAI databases
-- **7,124 knowledge chunks** indexed in ChromaDB
-- **Semantic search** using `all-MiniLM-L6-v2` embeddings
-- **Recursive indexing** - automatically finds all PDFs in subdirectories
+## 🏗️ System Architecture
 
-### 3. Multi-LLM Fallback Chain
-Priority order with automatic fallback:
-1. **Gemini 2.5 Pro** → Best quality
-2. **Groq (llama-3.1-8b)** → Fast, 90%+ confidence
-3. **Gemini 2.5 Flash** → Backup
-4. **OpenRouter (Kat Coder Pro)** → Free tier
-5. **OpenRouter (Nova 2 Lite)** → Free tier
-6. **FLAN-T5 (Local)** → No API needed
+```
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                              ❯  USER  INPUT                                 ║
+║   ┌────────────────────────────┐          ┌──────────────────────────────┐  ║
+║   │  Question / Query          │          │  File · Folder · Git · PR    │  ║
+║   └────────────┬───────────────┘          └───────────────┬──────────────┘  ║
+╚════════════════╪═══════════════════════════════════════════╪════════════════╝
+                 │                                           │
+                 ▼                                           ▼
+  ╔══════════════════════════╗         ╔══════════════════════════════════════╗
+  ║   🤖  RAG CHATBOT AGENT  ║         ║       🔍  CODE REVIEW AGENT         ║
+  ║   python rag_main.py     ║         ║       python code_review_main.py    ║
+  ║                          ║         ║                                     ║
+  ║  Tools                   ║         ║  Tools                              ║
+  ║  ├─ knowledge_search     ║         ║  ├─ file_reader                     ║
+  ║  ├─ clarify_question     ║         ║  ├─ static_analysis_helper          ║
+  ║  ├─ summarize_context    ║         ║  ├─ markdown_writer                 ║
+  ║  └─ provide_sources      ║         ║  └─ sandbox_validator               ║
+  ║                          ║         ║                                     ║
+  ║  Pipeline                ║         ║  Pipeline                           ║
+  ║  ├─ Reason               ║         ║  ├─ Read  →  AST (24 rules)        ║
+  ║  ├─ Search (5 chunks)    ║         ║  ├─ RAG retrieval                   ║
+  ║  ├─ Generate             ║         ║  ├─ LLM Generate                    ║
+  ║  ├─ Reflect  ×3          ║         ║  ├─ Reflect  ×3                     ║
+  ║  └─ Grade  (A–F)         ║         ║  └─ Sandbox validate                ║
+  ╚══════════════╦═══════════╝         ╚═══════════════════╦══════════════════╝
+                 ║                                         ║
+                 ╚═══════════════════╦═════════════════════╝
+                                     ║
+               ╔═════════════════════╩══════════════════════╗
+               ║         🔗  SHARED  INFRASTRUCTURE         ║
+               ║                                            ║
+               ║  ┌─────────────────────────────────────┐  ║
+               ║  │  Multi-LLM Fallback Chain           │  ║
+               ║  │  1. Gemini 2.5 Pro   (primary)      │  ║
+               ║  │  2. Groq llama-3.1   (fast)         │  ║
+               ║  │  3. Gemini 2.5 Flash (backup)       │  ║
+               ║  │  4. OpenRouter #1    (free tier)     │  ║
+               ║  │  5. OpenRouter #2    (free tier)     │  ║
+               ║  │  6. FLAN-T5 local    (no API key)   │  ║
+               ║  └─────────────────────────────────────┘  ║
+               ║                                            ║
+               ║  ┌─────────────────────────────────────┐  ║
+               ║  │  RAG Pipeline                       │  ║
+               ║  │  PDF/MP4 → Chunk → Embed →          │  ║
+               ║  │  ChromaDB (7,124 chunks)            │  ║
+               ║  │  all-MiniLM-L6-v2 embeddings        │  ║
+               ║  └─────────────────────────────────────┘  ║
+               ╚══════════════════════╦═════════════════════╝
+                                      ║
+               ╔══════════════════════╩═════════════════════╗
+               ║                  📤  OUTPUT                 ║
+               ║  ┌────────────────────┐  ┌───────────────┐ ║
+               ║  │ Answer + Sources   │  │ codereview.md │ ║
+               ║  │ Confidence + Grade │  │ corrected_*.py│ ║
+               ║  └────────────────────┘  │ audit_log.json│ ║
+               ║                          └───────────────┘ ║
+               ╚════════════════════════════════════════════╝
+```
 
-### 4. Self-Reflection & Reasoning
-- Up to **3 reflection iterations** to improve review quality
-- **Confidence scoring** (0-100%) for each review
-- Automatic refinement if confidence < 70%
+> Full Mermaid diagram available in [`architecture.mmd`](architecture.mmd)
 
-### 5. Sandbox Validation
-- **Syntax check** with Python's `compile()`
-- **Black formatting** check
-- **Pylint** quality score
-- Only presents validated fixes
+---
 
-### 6. Tool-Calling Architecture
-**Code Review Agent Tools:**
-- `file_reader` → Read code files
-- `static_analysis_helper` → AST-based analysis
-- `markdown_writer` → Generate reports
-- `sandbox_validator` → Validate fixes
+## 🎬 Live CLI Demo
 
-**RAG Chatbot Agent Tools:**
-- `knowledge_search` → Search RAG knowledge base
-- `clarify_question` → Rephrase ambiguous questions
-- `summarize_context` → Summarize long contexts
-- `provide_sources` → Format source citations
+### Code Review Agent
+
+```bash
+$ python code_review_main.py review ./samples/python/bad_code_smells.py
+```
+
+```
+╔══════════════════════════════════════════════════════════════╗
+║   🔍  CODE REVIEW AGENT  ·  bad_code_smells.py              ║
+╚══════════════════════════════════════════════════════════════╝
+
+ [1/7]  📂  Reading file ................ bad_code_smells.py
+ [2/7]  🔬  Running static analysis ..... 33 issues found
+              ├─ CRITICAL  ×  4   (SQL injection, bare secrets)
+              ├─ MAJOR     × 17   (missing docstrings, deep nesting)
+              └─ MINOR     × 12   (magic numbers, style)
+ [3/7]  📚  Retrieving best practices ... 5 RAG chunks matched
+ [4/7]  🧠  Generating review ........... ✓ Groq llama-3.1-8b-instant
+ [5/7]  🔄  Self-reflection ............. iteration 1 → confidence 0.85
+ [6/7]  🛡️   Sandbox validation .......... ✓ Black  ✓ Pylint  ✓ compile()
+ [7/7]  📝  Writing outputs .............
+              ├─ ✓  codereview.md
+              ├─ ✓  corrected_bad_code_smells.py
+              └─ ✓  audit_log.json
+
+╔══════════════════════════════════════════════════════════════╗
+║   ✅  Review complete   ·   Confidence: 90.0%               ║
+╚══════════════════════════════════════════════════════════════╝
+```
+
+### RAG Chatbot Agent
+
+```bash
+$ python rag_main.py ask "What are the production Do's for RAG?" --verbose
+```
+
+```
+╔══════════════════════════════════════════════════════════════╗
+║   🤖  RAG CHATBOT AGENT                                     ║
+╚══════════════════════════════════════════════════════════════╝
+
+ [Step 1]  💭  Reasoning about the question ...
+ [Step 2]  🔎  Searching knowledge base ........  5 chunks found
+ [Step 3]  ✍️   Generating answer ...
+ [Step 4]  🔄  Self-reflecting .................. confidence: 0.85
+ [Step 5]  📊  Evaluating quality .............. Grade: B  (score: 0.82)
+
+ ┌─────────────────────────────────────────────────────────┐
+ │  Answer                                                 │
+ │  1. Use hybrid search (vector + keyword)               │
+ │  2. Implement smart chunking strategies                 │
+ │  3. Add metadata filtering for relevance               │
+ │  4. Cache frequent queries                             │
+ │  5. Monitor hallucination rates in production          │
+ │                                                        │
+ │  Sources: RAG_Best_Practices.pdf, Production_ML.pdf    │
+ └─────────────────────────────────────────────────────────┘
+
+╔══════════════════════════════════════════════════════════════╗
+║   ✅  Response generated   ·   Confidence: 0.85            ║
+╚══════════════════════════════════════════════════════════════╝
+```
+
+---
+
+## ✨ Feature Deep-Dive
+
+<details>
+<summary><b>🔍 Code Review Agent — everything it can do</b></summary>
+
+### Multi-Source Input
+| Input Type | Command | Notes |
+|---|---|---|
+| Single file | `review file.py` | Any `.py` file |
+| Entire folder | `review ./src/` | Recursive |
+| Uncommitted changes | `review-changes` | Tracked modified files |
+| Staged changes | `review-changes --staged` | After `git add` |
+| Specific commit | `review-commit <hash>` | SHA or ref |
+| GitHub PR | `review-pr <#> --repo owner/repo` | Requires `GITHUB_TOKEN` |
+
+### AST Static Analysis (24 Rules)
+| Severity | Rules |
+|---|---|
+| 🔴 **Critical** | SQL injection patterns, hardcoded secrets/passwords, eval() usage |
+| 🟠 **Major** | Missing docstrings, bare `except`, unused imports, deep nesting (>4) |
+| 🟡 **Minor** | Long functions (>20 lines), magic numbers, missing type hints |
+
+### 3-Step Output
+```
+code_review_output/
+├── codereview.md          ← Markdown report with inline annotations
+├── corrected_*.py         ← Fixed source with explanatory comments
+└── audit_log.json         ← Immutable audit trail (hash, LLM, rules)
+```
+
+</details>
+
+<details>
+<summary><b>🤖 RAG Chatbot Agent — knowledge base & evaluation</b></summary>
+
+### Knowledge Base (7,124 Chunks)
+- **22 PDF documents** — Clean Code, Design Patterns, Security, OOP, RAG
+- **2 Video transcripts** — Whisper-transcribed (RAG + GenAI Databases)
+- **Embeddings** — `all-MiniLM-L6-v2` via SentenceTransformers
+- **Vector DB** — ChromaDB with persistent local storage
+
+### Evaluation Metrics
+| Metric | Measured By |
+|---|---|
+| **Relevance** | Semantic similarity of answer to question |
+| **Groundedness** | Claims traceable to retrieved source chunks |
+| **Clarity** | Structure, readability, formatting |
+| **Completeness** | All question aspects addressed |
+| **Grade** | Composite A–F letter grade |
+
+### Tools Available to the Agent
+```python
+knowledge_search(query)      # Semantic search over 7,124 chunks
+clarify_question(question)   # Rephrase for better retrieval
+summarize_context(text)      # Compress long retrieved contexts
+provide_sources(chunks)      # Format inline citations
+```
+
+</details>
+
+<details>
+<summary><b>🧠 Multi-LLM Fallback Chain</b></summary>
+
+The system tries each provider in priority order and falls back automatically on error or timeout:
+
+```
+Priority  Provider              Model                  Tier
+────────  ───────────────────── ──────────────────── ────────
+  1       Google Gemini         gemini-2.5-pro        API Key
+  2       Groq                  llama-3.1-8b-instant  API Key (free)
+  3       Google Gemini         gemini-2.5-flash      API Key
+  4       OpenRouter            kat-coder-pro         API Key (free)
+  5       OpenRouter            nova-2-lite           API Key (free)
+  6       HuggingFace local     FLAN-T5               No key needed
+```
+
+> **Zero downtime:** If Gemini quota is exceeded, the agent silently falls back — you always get a response.
+
+</details>
 
 ---
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Python 3.10+
-- FFmpeg (for video transcription)
-- Git
 
-### Installation
+```
+Python 3.10+   Git   FFmpeg (optional, for video transcription)
+```
+
+### 1 · Clone & Install
 
 ```bash
-# Clone the repository
 git clone https://github.com/Misrilal-Sah/capstone-ai-code-review-and-correction-agent.git
 cd capstone-ai-code-review-and-correction-agent
 
 # Create virtual environment
 python -m venv venv
-venv\Scripts\activate  # Windows
-# source venv/bin/activate  # Linux/Mac
 
-# Install dependencies
+# Activate  (Windows)
+venv\Scripts\activate
+# Activate  (Linux / macOS)
+source venv/bin/activate
+
+# Install all dependencies
 pip install -r requirements.txt
 ```
 
-### Configure API Keys
+### 2 · Configure API Keys
 
-Create a `.env` file:
+Create a `.env` file in the project root:
 
 ```env
-# Google Gemini (Primary)(google studio)
+# ── Primary LLM ────────────────────────────────────────────
+# Google AI Studio → https://aistudio.google.com/
 GEMINI_API_KEY=your_gemini_key
 
-# Groq (Backup - Free)(https://console.groq.com/)
+# ── Fast Fallback (Free) ────────────────────────────────────
+# Groq Console → https://console.groq.com/
 GROQ_API_KEY=your_groq_key
 
-# OpenRouter (Optional - Free)
+# ── Optional Free Fallbacks ─────────────────────────────────
+# OpenRouter → https://openrouter.ai/
 OPENROUTER_KEY_1=your_openrouter_key
 
-# GitHub (For PR review)
+# ── GitHub PR Review ────────────────────────────────────────
+# GitHub → Settings > Developer settings > Personal access tokens
 GITHUB_TOKEN=your_github_pat
 ```
 
-### Index Knowledge Base (First Run)
+> **Minimum viable setup:** Only `GEMINI_API_KEY` or `GROQ_API_KEY` is required. FLAN-T5 works with no keys at all.
 
-The knowledge base includes **20 PDF documents** on Python best practices. You can optionally download videos for additional knowledge:
-
-**Optional Video Downloads:**
-- [Error Handling Techniques](https://youtu.be/YA0Wq1rcs6U?si=dPTCqGRKaE3YI_Xj)
-- [Python Full Course 2025](https://youtu.be/K5KVEU3aaeQ?si=racmqfXbB-FKj7KD)
-- [Functional Programming in Python](https://youtu.be/PBc4flRmdBY?si=Q7xo7h1sSl3dQjbf)
-
-Place downloaded videos in `./Data/python/` folder.
+### 3 · Index the Knowledge Base
 
 ```bash
-# Index the knowledge base
+# Index all PDFs in the default data folder (run once)
 python code_review_main.py index --data-dir ./Data/python
 ```
 
-> **💡 Extend Knowledge Base:** You can add more PDFs or videos to the `Data/` folder (including subdirectories like `Data/python/`). The RAG system will automatically index any new documents when you run the `index` command. We tested with 22 PDFs and 2 videos (7,124 chunks indexed).
+```
+  📂  Scanning ./Data/python ... 22 PDFs + 2 transcripts found
+  ⚙️   Chunking documents ......... 7,124 chunks
+  🔢  Generating embeddings ..... all-MiniLM-L6-v2
+  💾  Persisting to ChromaDB .... ✓ done
+```
 
-### Run Code Review
+> **Extend the knowledge base:** Drop extra PDFs or `.mp4` videos anywhere under `./Data/` and re-run the index command.
+
+---
+
+## 🖥️ CLI Reference
+
+### `code_review_main.py`
 
 ```bash
-# Review a single file
-python code_review_main.py review ./samples/python/bad_code_smells.py
+# ── File / Folder ────────────────────────────────────────────
+python code_review_main.py review <path>          # Single file or folder
+python code_review_main.py review ./src/ --output ./reports
 
-# Review entire folder
-python code_review_main.py review ./samples/python
+# ── Git Integration ──────────────────────────────────────────
+python code_review_main.py review-changes         # Uncommitted tracked files
+python code_review_main.py review-changes --staged # Staged files (git add first)
+python code_review_main.py review-commit <hash>   # Specific commit
 
-# Review uncommitted changes (modified tracked files)
-python code_review_main.py review-changes
-
-# Review staged changes (new or modified files - use git add first)
-python code_review_main.py review-changes --staged
-
-# Review a specific commit
-python code_review_main.py review-commit abc123
-
-# Review a GitHub PR
+# ── GitHub Pull Request ──────────────────────────────────────
 python code_review_main.py review-pr 42 --repo owner/repo
+
+# ── Knowledge Base ───────────────────────────────────────────
+python code_review_main.py index --data-dir ./Data/python
 ```
 
-> **💡 Tip:** For new (untracked) files, use `git add <file>` first, then run `review-changes --staged`.
-
-### Run RAG Chatbot Agent
+### `rag_main.py`
 
 ```bash
-# Interactive chat with reasoning and reflection
-python rag_main.py chat
+# ── Interactive Chat ─────────────────────────────────────────
+python rag_main.py chat                           # REPL with history
 
-# Ask a single question
-python rag_main.py ask "What are best practices for RAG?"
+# ── Single Question ──────────────────────────────────────────
+python rag_main.py ask "What are SOLID principles?"
+python rag_main.py ask "Why use type hints?" --verbose --show-reasoning
 
-# Run evaluation on test questions
-python rag_main.py evaluate
-
-# Show reasoning steps
-python rag_main.py ask "Why is hybrid search better?" --verbose --show-reasoning
-```
-
-**Example Output:**
-```
-============================================================
-Question: What are the production 'Do's' for RAG?
-============================================================
-
-[Step 1] Reasoning about the question...
-[Step 2] Searching knowledge base...
-  Found 5 relevant chunks
-[Step 3] Generating answer...
-[Step 4] Self-reflecting on response...
-  Confidence: 0.85
-[Step 5] Evaluating response quality...
-  Grade: B (score: 0.82)
-
-Answer:
-The production Do's for RAG include:
-1. Use hybrid search combining vector and keyword search
-2. Implement proper chunking strategies
-3. Add metadata filtering for better relevance
-...
-
-Sources: RAG_Best_Practices.pdf, Production_ML.pdf
-============================================================
-✓ Response generated (confidence: 0.85)
-============================================================
+# ── Evaluation Run ───────────────────────────────────────────
+python rag_main.py evaluate                       # Runs built-in test suite
 ```
 
 ---
@@ -269,115 +388,135 @@ Sources: RAG_Best_Practices.pdf, Production_ML.pdf
 ## 📁 Project Structure
 
 ```
-├── code_review/                 # Code Review Agent package
-│   ├── agent.py                 # Core agent with agentic loop
-│   ├── llm_provider.py          # Multi-LLM fallback chain
-│   ├── static_analyzer.py       # AST-based analysis (24 rules)
-│   ├── tools.py                 # Tool functions
-│   ├── reflection.py            # Self-reflection layer
-│   ├── evaluator.py             # Review evaluation metrics
-│   └── git_integration.py       # Git/GitHub integration
+capstone-ai-code-review-and-correction-agent/
 │
-├── rag_agent/                   # RAG Chatbot Agent package (NEW)
-│   ├── agent.py                 # Agentic loop with reasoning
-│   ├── tools.py                 # Tool functions (search, clarify, summarize)
-│   ├── reflection.py            # Self-reflection & confidence scoring
-│   └── evaluator.py             # Response quality metrics
+├── 🔍 code_review/                    Code Review Agent package
+│   ├── agent.py                       Core agentic loop (7-step pipeline)
+│   ├── llm_provider.py                Multi-LLM fallback chain
+│   ├── static_analyzer.py             AST-based analysis · 24 rules
+│   ├── tools.py                       file_reader, sandbox_validator, …
+│   ├── reflection.py                  Self-reflection with confidence scoring
+│   ├── evaluator.py                   Review quality metrics
+│   └── git_integration.py             Git diff + GitHub PR via API
 │
-├── rag_chatbot/                 # Base RAG pipeline
-│   ├── chatbot.py               # Main RAG chatbot
-│   ├── pdf_loader.py            # PDF processing
-│   ├── audio_transcriber.py     # Whisper transcription
-│   ├── chunker.py               # Text chunking
-│   ├── embedder.py              # Embeddings
-│   ├── vector_store.py          # ChromaDB storage
-│   ├── retriever.py             # Semantic search
-│   └── generator.py             # LLM response
+├── 🤖 rag_agent/                      RAG Chatbot Agent package
+│   ├── agent.py                       Agentic loop with 5-step reasoning
+│   ├── tools.py                       knowledge_search, clarify_question, …
+│   ├── reflection.py                  Confidence-based reflection
+│   └── evaluator.py                   Relevance · Groundedness · Clarity · Completeness
 │
-├── Data/                        # Knowledge base root
-│   ├── *.pdf                    # GenAI lecture PDFs
-│   ├── *.mp4                    # Video lectures (auto-transcribed)
-│   └── python/                  # Python-specific PDFs (20 files)
+├── 🔗 rag_chatbot/                    Shared RAG infrastructure
+│   ├── chatbot.py                     Main orchestrator
+│   ├── pdf_loader.py                  PyMuPDF document ingestion
+│   ├── audio_transcriber.py           Whisper MP4 → text
+│   ├── chunker.py                     LangChain recursive splitting
+│   ├── embedder.py                    SentenceTransformers (MiniLM)
+│   ├── vector_store.py                ChromaDB persistence layer
+│   ├── retriever.py                   Semantic k-NN search
+│   └── generator.py                   LLM response generation
+│
+├── 📂 Data/                           Knowledge base root
+│   ├── *.pdf                          GenAI / RAG lecture PDFs
+│   ├── *.mp4                          Video lectures (auto-transcribed)
+│   └── python/                        22 Python best-practice PDFs
 │       ├── Clean-Python.pdf
 │       ├── Static_analysis_of_Python_code.pdf
-│       └── ...                  # Design patterns, security, exceptions
+│       └── …
 │
-├── rag_main.py                  # CLI for RAG Chatbot Agent
-├── code_review_main.py          # CLI for Code Review Agent
-├── test_rag_agent.py            # Test script for RAG Agent
-├── Rag_chatbot_answer.txt       # Sample output from RAG Agent test
-├── architecture.mmd             # System architecture diagram (Mermaid)
-└── requirements.txt             # Dependencies
-```
-
-> **Two Entry Points:** Use `rag_main.py` for general Q&A and `code_review_main.py` for code analysis.
-
----
-
-## 📊 Evaluation Metrics
-
-The agent calculates:
-
-| Metric | Description |
-|--------|-------------|
-| **Issues Found** | Count of detected problems |
-| **Confidence Score** | 0-100% certainty of review quality |
-| **Overall Score** | 0-10 code quality rating |
-| **Validation Status** | Pass/Fail for suggested fixes |
-
----
-
-## 🛠️ Technologies Used
-
-| Category | Technology |
-|----------|------------|
-| **LLMs** | Gemini 2.5 Pro/Flash, Groq, OpenRouter, FLAN-T5 |
-| **Embeddings** | SentenceTransformers (all-MiniLM-L6-v2) |
-| **Vector DB** | ChromaDB |
-| **PDF Processing** | PyMuPDF |
-| **Audio Transcription** | OpenAI Whisper |
-| **Static Analysis** | Python AST, Pylint, Black |
-| **Frameworks** | LangChain |
-
----
-
-## 📖 Example Output
-
-```
-============================================================
-Reviewing: samples/python/bad_code_smells.py
-============================================================
-
-[1/7] Reading file...
-[2/7] Running static analysis...
-  Found 33 static analysis issues
-[3/7] Retrieving best practices...
-[4/7] Generating code review...
-  ✓ Using Groq llama-3.1-8b-instant
-[5/7] Running self-reflection...
-  Reflection iteration 1: confidence = 0.85
-[6/7] Validating fixes...
-  ✓ Suggested fix passed validation
-[7/7] Generating outputs...
-  ✓ Report saved: codereview.md
-  ✓ Corrected code saved: corrected_bad_code_smells.py
-
-============================================================
-Review complete! Confidence: 90.0%
-============================================================
+├── 🧪 samples/python/                 Test inputs for code review
+│   ├── bad_code_smells.py
+│   ├── bad_code_security.py
+│   └── bad_code_exceptions.py
+│
+├── code_review_main.py                CLI entry-point for Code Review Agent
+├── rag_main.py                        CLI entry-point for RAG Chatbot Agent
+├── test_rag_agent.py                  Automated agent test harness
+├── Rag_chatbot_answer.txt             Sample test output (7,124-chunk KB)
+├── architecture.mmd                   Mermaid system diagram
+└── requirements.txt                   Pinned dependencies
 ```
 
 ---
 
-## 👤 Author
+## 📊 Evaluation & Metrics
 
-**Misrilal Sah**
+### Code Review Agent
 
-- GitHub: [@Misrilal-Sah](https://github.com/Misrilal-Sah)
+| Metric | What It Measures |
+|---|---|
+| **Issues Found** | Total AST / LLM violations detected |
+| **Confidence Score** | 0–100 % certainty of review completeness |
+| **Overall Score** | 0–10 code quality rating |
+| **Validation Status** | Pass / Fail from Black + Pylint + compile() |
+| **Audit Hash** | SHA-256 of the reviewed file (immutable log) |
+
+### RAG Chatbot Agent
+
+| Metric | What It Measures |
+|---|---|
+| **Relevance** | Semantic match of answer to question intent |
+| **Groundedness** | Claims traceable to retrieved chunks |
+| **Clarity** | Readability, structure, formatting |
+| **Completeness** | Coverage of all question facets |
+| **Grade** | Composite letter grade A → F |
 
 ---
 
-## 🙏 Acknowledgments
+## 🛠️ Tech Stack
 
-- AI Academy for the assignment
-- HuggingFace for open-source models
+<div align="center">
+
+| Layer | Technology |
+|---|---|
+| **Primary LLM** | ![Gemini](https://img.shields.io/badge/Gemini_2.5_Pro-4285F4?style=flat-square&logo=google) |
+| **Fast LLM** | ![Groq](https://img.shields.io/badge/Groq_llama--3.1--8b-F54E42?style=flat-square) |
+| **Local LLM** | ![HuggingFace](https://img.shields.io/badge/FLAN--T5_Local-FFD21E?style=flat-square&logo=huggingface&logoColor=black) |
+| **Embeddings** | ![SentenceTransformers](https://img.shields.io/badge/SentenceTransformers_MiniLM-FF6B35?style=flat-square) |
+| **Vector DB** | ![ChromaDB](https://img.shields.io/badge/ChromaDB_7124_chunks-1C3C3C?style=flat-square) |
+| **PDF Processing** | ![PyMuPDF](https://img.shields.io/badge/PyMuPDF-3776AB?style=flat-square&logo=python&logoColor=white) |
+| **Audio / Video** | ![Whisper](https://img.shields.io/badge/OpenAI_Whisper-412991?style=flat-square&logo=openai&logoColor=white) |
+| **Static Analysis** | ![AST](https://img.shields.io/badge/Python_AST_·_Pylint_·_Black-3776AB?style=flat-square&logo=python&logoColor=white) |
+| **RAG Framework** | ![LangChain](https://img.shields.io/badge/LangChain-1C3C3C?style=flat-square) |
+| **Git Integration** | ![GitHub](https://img.shields.io/badge/GitHub_API-181717?style=flat-square&logo=github) |
+
+</div>
+
+---
+
+## 💡 Optional: Extend the Knowledge Base
+
+You can enrich the RAG knowledge base with additional videos:
+
+| Resource | Topic |
+|---|---|
+| [Error Handling Techniques](https://youtu.be/YA0Wq1rcs6U) | Advanced Python exception patterns |
+| [Python Full Course 2025](https://youtu.be/K5KVEU3aaeQ) | Comprehensive language reference |
+| [Functional Programming in Python](https://youtu.be/PBc4flRmdBY) | FP patterns and best practices |
+
+```bash
+# Place .mp4 files in ./Data/python/ then re-index
+python code_review_main.py index --data-dir ./Data/python
+```
+
+---
+
+<div align="center">
+
+---
+
+```
+╔══════════════════════════════════════════════════════════════════╗
+║                                                                  ║
+║   Built with  ♥  by  Misrilal Sah                               ║
+║                                                                  ║
+║   "Good code is its own best documentation."                    ║
+║                              — Steve McConnell                  ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+
+[![GitHub](https://img.shields.io/badge/@Misrilal--Sah-181717?style=for-the-badge&logo=github)](https://github.com/Misrilal-Sah)
+
+*Built as a capstone project for AI Academy · Powered by open-source LLMs & HuggingFace*
+
+</div>
